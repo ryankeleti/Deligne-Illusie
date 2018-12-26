@@ -1,0 +1,1079 @@
+\documentclass[10pt,reqno]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[left=0.5in,right=0.5in,top=0.5in,bottom=0.5in]{geometry}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{array}
+%\usepackage{enumitem}
+\usepackage{tikz-cd}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{calligra}
+\usepackage[charter]{mathdesign}
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+\allowdisplaybreaks[1]
+\renewcommand\refname{Bibliography}
+\title{Liftings modulo $p^2$ and decomposition of the de Rham complex
+\hspace*{-0.3em}\thanks{If you notice a typo or translation error, please visit \url{https://github.com/ryankeleti/Deligne-Illusie/issues}.}}
+\author{P. Deligne and L. Illusie}
+\date{}
+\hypersetup{
+  colorlinks,
+  allcolors=[rgb]{0,0.45,0}
+}
+
+\newcommand{\mbold}{\mathbf}
+\newcommand{\dR}{\mathrm{dR}}
+\renewcommand{\H}{\mathrm{H}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\HH}{\mathcal{H}}
+\renewcommand{\O}{\mathcal{O}}
+\newcommand{\C}{\check{\mathcal{C}}}
+\newcommand{\p}{\boldsymbol{p}}
+\newcommand{\ah}{^\ast}
+\newcommand{\al}{_\ast}
+\newcommand{\bh}{^\bullet}
+\newcommand{\bl}{_\bullet}
+\newcommand{\wt}[1]{\smash{\widetilde{#1}}}
+\newcommand{\X}{\wt{X}}
+\newcommand{\F}{\wt{F}}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Rel}{Rel}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\Sc}{sc}
+\DeclareMathOperator{\Lg}{lg}
+\DeclareMathOperator{\Cl}{cl}
+\DeclareMathOperator{\e}{e}
+\DeclareMathOperator{\SHom}{\mathcal{H}\text{\kern -3pt {\calligra\large om}}\,}
+\DeclareMathOperator{\Spec}{Spec}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{blk}[thm]{}
+
+\begin{document}
+\maketitle
+\setcounter{section}{-1}
+
+\section{Introduction}
+
+Let $X$ be a smooth proper scheme over a field $k$. The de Rham cohomology of $X/k$,
+$\H_\dR\ah(X/k):=\H\ah(X,\Omega_{X/k}\bh)$, is the result of the Hodge-de Rham spectral
+sequence
+\[
+  E_1^{ij}=\H^j(X,\Omega_{X/k}^i)\Longrightarrow\H_\dR^{i+j}(X/k).\tag{0.1}
+\]
+
+We know that if $k$ has characteristic $0$, (0.1) degenerates at $E_1$: for $X$
+projective, this is a result of Hodge theory, and the proper case reduces to the
+projective case by Chow's lemma and the resolution of singularities (cf. \cite[5.5]{5}).
+
+The first proof of this fact not using Hodge theory was given by Faltings \cite{8},
+as an application of his theory of the existence of a Hodge-Tate decomposition
+for the $p$-adic {\'e}tale cohomology on smooth proper varieties over local fields
+of different characteristic.
+
+If $k$ has characteristic $p>0$, it is possible that (0.1) does not degenerate at $E_1$
+(cf. Mumford \cite{22} and 2.5(i)). However, Kato has recently shown \cite{14} that, given $k$
+perfect of characteristic $p>0$ and $X$ smooth projective over $k$, if we assume that
+$X$ has dimension $<p$ and lifts to the ring $W(k)$ of Witt vectors of $k$, then
+this ``pathological'' phenomena does not occur. Fontaine and Messing \cite{10} have extended
+this result to the proper case, and deduced, by a standard argument, the degeneration
+of (0.1) in characteristic $0$. This second proof uses crystalline techniques.
+
+We give here a basic proof of a more precise result than that of Kato or Fontaine-Messing,
+and which is the following. Suppose $k$ perfect, of characteristic $p>0$, and let $X$ be a
+smooth $k$-scheme (of arbitrary dimension, and not necessarily proper). Let $X'$ be induced
+from $X$ by extention of scalars $k\xrightarrow{\sim}k$, $\lambda\mapsto\lambda^p$, and
+$F:X\to X'$ the relative Frobenius (1.1). To prove that each smooth lift $\X$ of $X$
+to the ring $W_2(k)$ of Witt vectors of length $2$ determines an isomorphism
+\[
+  \varphi_{\X}:\bigoplus_{0\leq i<p}\Omega_{X'/k}^i[-i]\xrightarrow{\ \sim\ }\tau_{<p}F\al\Omega_{X/k}\bh\tag{0.2}
+\]
+in the derived category $D(X',\O)$. It follows, by counting dimensions, that if $X$ admits
+a smooth lift $\X$ to $W_2(k)$, and is moreover assumed proper and of
+dimension $<p$, the spectral sequence (0.1) degerates at $E_1$.
+
+Here is the principle of the construction of $\varphi=\varphi_{\X}$. Let
+$\sigma:W_2(k)\xrightarrow{\sim}W_2(k)$ be the lift
+$(\lambda_0,\lambda_1)\mapsto(\lambda_0^p,\lambda_1^p)$ of the automorphism
+$\lambda\mapsto\lambda^p$ of $k$ and $\X'$ be induced from $\X$ by extension of
+scalars by $\sigma$. If $F$ lifts to $\F:\X\to\X'$, the homomorphism
+$\F\ah:\Omega_{\X/W_2(k)}^1\to\F\al\Omega_{\X/W_2(k)}^1$ provides,
+after division by $p$, a morphism of complexes
+\[  
+  f:\Omega_{X'/k}^1[-i]\longrightarrow F\al\Omega_{X/k}\bh
+\]
+inducing on $\HH^1$ the Cartier isomorphism $C^{-1}$ (1.2) (this idea, which goes back
+to Mazur \cite{20}, has already been widely exploited). If $\F_1$ and $\F_2$ are
+two lifts, their ``difference'' is a homomorphism of $\Omega_{X'/k}^1$ into $F\al\O_X$.
+It provides a homotopy between the maps $f_1$ and $f_2$ associated to $\F_1$
+and $\F_2$. These homotopies verify a transitivity condition. This makes it possible to
+globalize the construction by means of a covering of $X$ by open spaces where $F$ lifts.
+We thus obtain the component $\varphi^1$ of $\varphi$. We define the component $\varphi^0$
+as the map induced by $F\ah$, and we construct the $\varphi^i$ from $\varphi^0$ and
+$\varphi^1$ thanks to the multiplicative structure of the de Rham complex (here is where
+the restriction $i<p$ comes in).
+
+This construction is explained in n\textsuperscript{o} 2, after a brief reminder, in
+n\textsuperscript{o} 1, of the definition of the relative Frobenius and the Cartier
+isomorphism. We also give, in n\textsuperscript{o} 2, the ``standard'' argument allowing
+us to deduce from (0.2) the degeneration of (0.1) in characteristic zero. For $X$ of
+dimension $<p$, liftable to $W_2(k)$, (0.2) gives a decomposition in $D(X',\O)$
+\[
+  \bigoplus_i\Omega_{X'/k}^i[-i]\xrightarrow{\ \sim\ }F\al\Omega_{X/k}\bh.\tag{0.3}
+\]
+We show that we still have such decomposition for $X$ of dimension $p$. Finally, we
+deduce from (0.2) a Kodaira vanishing theorem in characteristic $p$: if $X$ is a smooth projective
+$6$-dimensional $k$-scheme over $W_2(k)$, and if $L$ is an ample inverible sheaf on $X$, then
+\[
+  \H^j(X,\Omega_{X/k}^i\otimes L^{-1})=0\quad\text{for}\quad i+j<\inf(p,\dim X).
+\]
+This result and its proof are due to Michael Raynaud. The classical theorem
+of Kodaira-Akizuki-Nakano en characteristic zero follows from the usual argument.
+
+The obstruction to the existence of a decomposition as in (0.2) and the dependence of
+$\varphi_{\X}$ relative to $\X$ are studied in n\textsuperscript{o} 3, where the
+construction of $\varphi$ is taken over a base $S$ of characteristic $p>0$. We show in
+particular the following result: if $S$ admits a flat lift $\wt{S}$ to $\mbold{Z}/p^2$, if
+$X$ is a smooth $S$-scheme and $X'$ is its inverse image under the absolute Frobenius
+of $S$, then $X'$ admits a smooth lift to $\wt{S}$ if and only if there exists a map
+$\Omega_{X'/S}^1[-1]\to F\al\Omega_{X/S}\bh$ in $D(X',\O)$ inducing the Cartier
+isomorphism $C^{-1}$ on $\HH^1$. An application to the degeneration of the
+Hodge-de Rham spectral sequence is given in n\textsuperscript{o} 4, where we also briefly treat
+the variant of the previous results for the de Rham complex at logarithmic poles along
+a divisor at normal crossings.
+
+\section{Notation and reminders}
+
+\noindent
+Let $p$ be a prime number.
+
+\begin{blk}
+If $S$ is a scheme of characteristic $p$, we denote by $F_S$ the
+\emph{Frobenius endomorphism} of $S$ (given by the identity on the underlying topological space and
+$a\mapsto a^p$ on $\O_S$). If $u:X\to S$ is a morphism of schemes, with $S$ of characteristic $p$,
+we have a commutative diagram
+\[
+  \begin{tikzcd}
+  X\ar[r,"F_{X/S}"]\ar[rr,"F_X",bend left=40]\ar[rd,"u"'] & X'\ar[r]\ar[d] & X\ar[d,"u"]\\
+  & S\ar[r,"F_S"] & S,
+  \end{tikzcd}
+\]
+where the square is Cartesian; the morphism $F_{X/S}$ is by definition the
+\emph{relative Frobenius morphism} of $X/S$; it will be simply denoted $F$ when there is no cause
+for confusion. For $x$ a local section of $\O_X$, $x\otimes 1$ its image in $\O_{X'}$, we have
+$F_{X/S}\ah(x\otimes 1)=F_X\ah(x)=x^p$. Example: if $X$ is defined by equations
+$f_\alpha=\sum_m a_{\alpha,m}T^m$ in the affine space $S[T_1,\dots,T_n]=\mbold{A}_S^n$, $X'$ is defined by
+the equations \smash{$f_\alpha^{(p)}=\sum_m a_{\alpha,m}^p T^m$} in $\mbold{A}_S^n$, and $F_{X/S}$ is given by
+$T_i\mapsto T_i^p$.
+\end{blk}
+
+Let $\Omega_{X/S}\bh$ be the de Rham complex of $X/S$. We will systematically use
+relative de Rham complexes, and later sometimes abbreviate $\Omega_{X/S}\bh$ to $\Omega_X\bh$,
+or even $\Omega\bh$. The complex $F\al\Omega_{X/S}\bh$ (where $F=F_{X/S}$) is a complex of
+$\O_{X'}$-modules, with linear differential. If $X$ is smooth over $S$, the $\O_X$-modules
+$\Omega_{X/S}^i$ are locally free of finite type (as well as the $\O_{X'}$-modules $\Omega_{X'/S}^i$),
+and the same is true of the $\O_{X'}$-modules $F\al\Omega_{X/S}^i$, since $F$ is finite locally free
+(of rank $p^r$ if $X$ is of relative dimension $r$ over $S$). In addition, we have the following basic
+result, thanks to Cartier \cite{4}:
+\begin{thm}[Cartier]
+Let $X\to S$ be a smooth morphism, with $S$ of characteristic $p$. There exists a unique morphism
+of graded $\O_{X'}$-algebras
+\[
+  C^{-1}:\bigoplus_i\Omega_{X'/S}^i\longrightarrow\bigoplus_i\HH^i F\al\Omega_{X/S}\bh
+\]
+such that $C^{-1}d(x\otimes 1)=$ class of $x^{p-1}dx$ for each local section $x$ of $\O_{X'}$,
+and $C^{-1}$ is an isomorphism.
+\end{thm}
+
+(The existence and uniqueness of $C^{-1}$ are easy, and it is verified that $C^{-1}$ is an
+isomorphism by reduction to the case of the affine line, and by a direct calculation: cf. Katz
+\cite[7.2]{15}.)
+
+\begin{blk}
+If $k$ is a perfect field of characteristic $p$, we denote by $W(k)$ the ring of
+Witt vectors of $k$, and $W_n(k)=W(k)/p^n$. The ring $W_n(k)$ is flat over $\mbold{Z}/p^n$, given
+by an isomorphism $W_n(k)/pW_n(k)\xrightarrow{\sim}k$, and is characterized up to unique isomorphism
+by these properties; we have $W(k)=\varprojlim W_n(k)$. The Frobenius automorphism of $k$
+induces, by functoriality, an automorphism $\sigma$ of $W(k)$ (resp. $W_n(k)$), given by
+$\sigma(a_0,a_1,\dots)=(a_0^p,a_1^p,\dots)$.
+\end{blk}
+
+\begin{blk}
+Let $A$ be an abelian category. For $n\in\mbold{Z}$, the truncation $\tau_{\leq n}L$ of a complex $L$
+in $A$ is the subcomplex of $L$ of components $L_i$ for $i<n$, $\ker(d)$ for $i=n$, and $0$
+for $i>n$. We have $\H^i\tau_{\leq n}L=\H^i L$ (resp. $0$) if $i\leq n$ (resp. $i>n$). We put
+$\tau_{<n}L:=\tau_{\leq n-1}L$. We define dually $\tau_{\geq n}L$, a quotient of $L$ with
+$\H^i\tau_{\geq n}=\H^i L$ (resp. $0$) if $i\geq n$ (resp. $i<n$).
+
+The shift $L[n]$ is the complex of components $L[n]^i=L^{i+n}$ with differential
+$d_{L[n]}=(-1)^n d_L$. For $M$ an object of $A$, we still denote by $M$ the reduced complex of
+$M$ concentrated in degree $0$; $M[n]$ is then the reduced complex $M$ concentrated in degree $-n$.
+\end{blk}
+
+\begin{blk}
+If $X$ is a scheme, we write $D(X):=D(X,\O_X)$ for the derived category of the
+category of $\O_X$-modules.
+\end{blk}
+
+\begin{blk}
+Let $\wt{S}$ be a scheme and $S$ a closed subscheme defined by a squarefree ideal. If $X$ is a flat
+$S$-scheme, we say that $X$ is \emph{liftable} to $S$ if $X$ admits a lifting on $\wt{S}$,
+i.e. a flat $\wt{S}$-scheme $\X$ with an isomorphism $\X\times_{\wt{S}}S\xrightarrow{\sim}X$;
+if $X$ is smooth over $S$, $\X$ is automatically smooth over $\wt{S}$.
+\end{blk}
+
+\section{Decomposition of the de Rham complex and applications (for a perfect field)}
+
+\begin{thm}
+Let $k$ be a perfect field of characteristic $p>0$, $S=\Spec(k)$, $\wt{S}=\Spec(W_2(k))$ (1.3),
+and let $X$ be a smooth $S$-scheme. For each smooth $\wt{S}$-scheme $\X$ lifting to $X$ there
+is a canonically associated isomorphism
+\[
+  \varphi_{\X}:\bigoplus_{i<p}\Omega_{X'/S}^i[-i]\xrightarrow{\ \sim\ }\tau_{<p}F\al\Omega_{X/S}\bh
+\]
+in $D(X')$, such that $\HH^i\varphi_{\X}=C^{-1}$ (1.2) for $i<p$.
+\end{thm}
+The proof will be done in four steps.
+
+\noindent
+(a) \emph{Reduction to the definition of $\varphi_{\X}^1$}. The data of $\varphi_{\X}$ is
+equivalent to the data, for each $i<p$, of a map $\varphi_{\X}^i:\Omega_{X'/S}^i[-i]\to F\al\Omega_{X/S}\bh$
+in $D(X')$ such that $\HH^i\varphi_{\X}^i=C^{-1}$. The map $\varphi_{\X}^0$ is necessarily
+the composite
+\[
+  \O_{X'}\xrightarrow{\ C^{-1}\ }\HH^0 F\al\Omega_{X/S}\bh\lhook\joinrel\longrightarrow F\al\Omega_{X/S}\bh.
+\]
+Suppose we define $\varphi_{\X}^1$ such that $\HH^1\varphi_{\X}^1=C^{-1}$. For $i\geq 1$,
+consider the product map
+\[
+  (\Omega_{X'/S}^1)^{\otimes i}\longrightarrow\Omega_{X'/S}^i,\quad \omega_1\otimes\cdots\otimes\omega_i\longmapsto\omega_1\wedge\cdots\wedge\omega_i;
+\]
+for $i<p$, this admits an ``antisymmetric'' section $a$, given by
+\[
+  a(\omega_1\wedge\cdots\wedge\omega_i)=(1/i!)\sum_{s\in S_i}\operatorname{sgn}(s)\omega_{s(1)}\otimes\cdots\otimes\omega_{s(i)}.
+\]
+For $1\leq i<p$, define $\varphi_{\X}^i$ as the composite map
+\[
+  \begin{tikzcd}
+  (\Omega_{X'/S}^1)^{\otimes i}[-i]
+  \ar[r,"(\varphi_{\X}^1)^{\otimes i}"] &
+  (F\al\Omega_{X/S}\bh)^{\otimes i}
+  \ar[d,"\text{product}"]\\
+  \Omega_{X'/S}^i[-i]
+  \ar[u,"{a[-i]}"]\ar[r,"\varphi_{\X}^i"] & F\al\Omega_{X/S}\bh.
+  \end{tikzcd}
+\]
+It follows from the multiplicative property of the Cartier isomorphism that $\HH^i\varphi_{\X}^i=C^{-1}$,
+and $\varphi_{\X}=\sum_{i<p}\varphi_{\X}^i$, with $\varphi_{\X}^0$ as above, answer the question.
+If sufficies to define $\varphi_{\X}^1:\Omega_{X'/S}^1[-1]\to F\al\Omega_{X/S}\bh$ such that
+$\HH^1\varphi_{\X}^1=C^{-1}$, which we will do in the next three steps.
+
+\noindent
+(b) \emph{The case where $F:X\to X'$ lifts}. Let $\X'$ be a $S$-scheme induced from $\X$ by the change
+of base $\sigma:\wt{S}\to\wt{S}$ (1.3). Suppose we define an $\wt{S}$-morphism $\F:\X\to\X'$
+lifting $F$. Since $F\ah:\Omega_{X'/S}^1\to F\al\Omega_{X/S}^1$ is zero, the image of
+$\F\ah:\Omega_{\X'/\wt{S}}^1\to\F\al\Omega_{\X/\wt{S}}^1$ is continuous in
+$p\F\al\Omega_{\X/\wt{S}}^1$. The multiplication by $p$ induces an isomorphism
+$\p:F\al\Omega_{X/S}^1\xrightarrow{\sim}p\F\al\Omega_{\X/\wt{S}}^1$, so there exists a
+unique map
+\[
+  f=p^{-1}\F\ah:\Omega_{X'/S}^1\to F\al\Omega_{X/S}^1
+\]
+rendering commutative the square
+\[
+  \begin{tikzcd}
+  \Omega_{\X'/\wt{S}}^1
+  \ar[r,"\F\ah"]\ar[d,two heads] &
+  p\F\al\Omega_{X/S}^1\\
+  \Omega_{X'/S}^1\ar[r,"f"] &
+  F\al\Omega_{X/S}^1.
+  \ar[u,"\simeq", "\p"']
+  \end{tikzcd}
+\]
+If $x$ is a local section of $\O_{\X}$, by reduction $x_0$ mod $p$, we have
+\[
+  \F\ah(x\otimes 1)=x^p+\p u(x)\tag{1}
+\]
+with $u(x)$ a section of $\O_{\X}$ (and $\p:\O_X\xrightarrow{\sim}p\O_{\X}$ multiplication
+by $p$), and
+\[
+  f(dx_0\otimes 1)=x_0^{p-1}dx_0+du(x).\tag{2}
+\]
+In particular, we have
+\[
+  df=0,\tag{3}
+\]
+so that $f$ defines a morphism of complexes
+\[
+  f:\Omega_{X'/S}^1[-1]\longrightarrow F\al\Omega_{X/S}\bh,
+\]
+such that $\HH^1 f=C^{-1}$ according to (2).
+
+\noindent
+(c) \emph{Homotopies}. Let, for $i=1,2$, $\F_i:\X\to\X'$ be an $\wt{S}$-morphism lifting $F$.
+Then $\F_2\ah-\F_1\ah:\O_{\X'}\to p\F\al\O_{\X}=\p F\al\O_X$ is a derivation, which
+determines a $\O_{X'}$-linear map
+\[
+  h_{12}:\Omega_{X'/S}^1\longrightarrow F\al\O_X
+\]
+rendering commutative the diagram
+\[
+  \begin{tikzcd}
+  \O_{\X'}
+  \ar[rr,"\F_2\ah-\F_1\ah"]\ar[d,two heads] & &
+  p\F\al\O_{\X}\\
+  \O_{X'}
+  \ar[d,"d"']\\
+  \Omega_{X'/S}^1
+  \ar[rr,"h_{12}"] & &
+  F\al\O_X.
+  \ar[uu,"\simeq","\p"']
+  \end{tikzcd}
+\]
+If, for $x$ as in (b), $\F_i\ah(x\otimes 1)=x^p+\p u_i(x)$, then
+\[
+  h_{12}(dx_0\otimes 1)=u_2(x)-u_1(x),
+\]
+from which, given (2),
+\[
+  f_2-f_1=dh_{12},\tag{4}
+\]
+where $f_i=p^{-1}\F_i\ah:\Omega_{X'/S}^1\to F\al\Omega_{X/S}^1$.
+
+If, for $i=1,2,3$, $\F_i:\X\to\X'$ an $S$-morphism lifting $F$, and $h_{ij}$
+corresponds to $\F_j-\F_i$, then we have
+\[
+  h_{12}+h_{23}=h_{12}.\tag{5}
+\]
+
+\noindent
+(d) \emph{The general case}. As $X'/S$ is smooth, $F$ admits, locally for the Zariski topology
+on $X$, a lifting $\F$ [(SGA 1 III) or (EGA IV \textsection 17)]. So we can find an open cover
+$\U=(U_i)_{i\in I}$ of $X$, and, for each $i$, an $S$-morphism $\F_i:\wt{U}_i\to\wt{U}_i'$
+lifting $F$ ($X$, $X'$, $\X$, $\X'$ have the same underlying spaces and we denote by
+$\U'$, $\wt{\U}$, $\wt{\U}'$ the open covers of $X'$, $\X$, $\X'$). Let, as in (b) and (c),
+\[
+  f_i=p^{-1}\F_i\ah:\Omega_{X'/S}^1|U_i'\longrightarrow F\al\Omega_{U_i/S}^1,
+\]
+and, for $U_{ij}'=U_i'\cap U_j'$, $h_{ij}:\Omega_{X'/S}^1|U_{ij}'\to F\al\Omega_{U_{ij}'/S}^1$
+correspond to $\F_j\ah-\F_i\ah$. We have
+\[
+  df_i=0,\quad f_j-f_i=dh_{ij}\ (\text{on } U_{ij}'),\quad h_{ij}+h_{jk}=h_{ik}\ (\text{on } U_{ijk}'=U_i'\cap U_j'\cap U_k').\tag{6}
+\]
+
+Let $\C(\U,\Omega_{X/S}\bh)$ be the ordinary complex associated to the double \v{C}ech complex
+of $\Omega_{X/S}\bh$, defined as the following. Put $\Delta_n=\{0,\dots,n\}$, and, for $s:\Delta_n\to I$,
+denote by $U_s$ the intersection of the $U_{s(n)}$ and by $j_s$ the inclusion of $U_s$ into $X$. The
+component of degree $n$ of $\C(\U,\Omega_{X/S}\bh)$ is
+\[
+  \C(\U,\Omega_{X/S}\bh)^n=\bigoplus_{a+b=n}\C^b(\U,\Omega_{X/S}^a),
+\]
+where $\C^b(\U,\Omega_{X/S}^a)$ is the product, extended by $s:\Delta_b\to I$, of
+$j_{s\ast}j_s\ah\Omega_{X/S}^a$. The differential of $\C(\U,\Omega_{X/S}\bh)$ is $d=d_1+d_2$, with
+$d_1:\C^b(\U,\Omega_{X/S}^a)\to\C^b(\U,\Omega_{X/S}^{a+1})$ induced by the differential of
+the de Rham complex, and $d_2:\C^b(\U,\Omega_{X/S}^a)\to\C^{b+1}(\U,\Omega_{X/S}^a)$ equal to
+$(-1)^a\sum_i(-1)^i\partial_i$. The evident morphisms $\Omega_{X/S}^a\to\C^0(\U,\Omega_{X/S}^a)$
+define a quasi-isomorphism $\Omega_{X/S}\bh\to\C(\U,\Omega_{X/S}\bh)$, and consequently a
+quasi-isomorphism
+\[
+  F\al\Omega_{X/S}\bh\longrightarrow F\al\C(\U,\Omega_{X/S}\bh).\tag{7}
+\]
+Define
+\[
+  \varphi_{(\U,(\F_i))}^1=(\varphi_1,\varphi_2):\Omega_{X'/S}^1\longrightarrow F\al\C(\U,\Omega_{X/S}\bh)^1
+  =F\al\C^1(\U,\O_X)\oplus F\al\C^0(\U,\Omega_{X/S}^1)
+\]
+by
+\[
+  (\varphi_1\omega)(i,j)=h_{ij}(\omega|U_{ij}'),\quad(\varphi_2\omega)(i)=f_i(\omega|U_i').
+\]
+The relations in (6) tell us that $d\varphi_{(\U,(\F_i))}^1=0$, i.e. $\varphi_{(\U,(\F_i))}^1$ is
+a morphism of complexes
+\[
+  \varphi_{(\U,(\F_i))}^1:\Omega_{X'/S}^1[-1]\longrightarrow F\al\C(\U,\Omega_{X/S}\bh).\tag{8}
+\]
+Finally, define
+\[
+  \varphi_{\X}^1:\Omega_{X'/S}^1[-1]\longrightarrow F\al\Omega_{X/S}\bh\tag{9}
+\]
+as the composite map in $D(X')$ of (8) and the inverse of (7). We verify that (9) does not depend on
+the choice of $(\U,(\F_i))$. It is clear that (9) does not change if we replace $\U$ by a finner covering
+and the $\F_i$ by the induced lifts. If $(\U=(U_i)_{i\in I},(\F_i)_{i\in I})$ and
+$(\mathcal{V}=(V_i)_{i\in J},(\F_i)_{i\in J})$ are two choices, the coverings $\U$ and $\mathcal{V}$
+are finner than $\U\amalg\mathcal{V}$, indexed by $I\amalg J$, and $(\U,(\F_i)_{i\in I})$ and
+$(\mathcal{V},(\F_i)_{i\in J})$ define the same map (9) that $(\U\amalg\mathcal{V},(\F_i)_{i\in I\amalg J})$
+does.
+
+The only thing left is to show that $\HH^1\varphi_{\X}^1=C^{-1}$. This is a local question, so we can suppose
+that $F$ admits a lift $\F:\X\to\X'$. The map $\varphi_{\X}^1$ is then defined by the
+morphism of complexes $f$ of (b), and we have seen that $\HH^1 f=C^{-1}$. This completes the proof of (2.1).
+
+\begin{rmk}
+(i) We have not actually used the fact that $S$ is the spectrum of a perfect field: the proof provides in fact
+an isomorphism $\varphi_{\X}$ for $S$ equal to the mod $p$ reduction of a scheme $\wt{S}$ to $\mbold{Z}/p^2$
+with an endomorphism $F_{\wt{S}}$ lifting $F_S$ ($\X'$ is then defined as induced from $\X$ by
+the change of base $F_{\wt{S}}$). We will study further (3.7) the dependence of $\varphi_{\X}^1$ on $X$.
+
+(ii) In the case where $F:X\to X'$ admits a lift $\F:\X\to\X'$, the map $f=p^{-1}\F\ah$ of
+(b) extend to a quasi-isomorphism of complexes of $\O_{X'}$-modules
+\[
+  \varphi_{(\X,\F)}:\bigoplus_{i\geq 0}\Omega_{X'/S}^i[-i]\longrightarrow F\al\Omega_{X/S}\bh
+\]
+inducing $C^{-1}$ on $\HH^i$ (and such that $\tau_{<p}\varphi_{(\X,\F)}$ has the image $\varphi_{\X}$
+in $D(X')$): it is indeed enough to define the component of $\varphi_{(\X,\F)}$ of degree $i$
+\[
+  \varphi_{(\X,\F)}:\Omega_{X'/S}^i\longrightarrow ZF\al\Omega_{X/S}^i
+\]
+as $C^{-1}$ for $i=0$, and, for $i\geq 1$, as the composition of $\Lambda^i f:\Omega_{X'/S}^i\to\Lambda^i ZF\al\Omega_{X/S}^1$
+and the product map ${\Lambda^i ZF\al\Omega_{X/S}^1\to ZF\al\Omega_{X/S}^i}$ ($Z$ denotes the kernel of $d$).
+
+(iii) The local lifts of $F$ form a torsor on $X'$ under the sheaf
+$\SHom(\Omega_{X'/S}^1,F\al\O_X)=\Theta_{X'/S}\otimes F\al\O_X$ of derivations of $X'$ with values in
+$F\al\O_X$. The class $c$ of this torsor in $\H^1(X',\Theta_{X'/S}\otimes F\al\O_X)$ is the obstruction to
+the existence of a global lift $\F:\X\to\X'$ of $F$. With the notations as in (d) above, and with a sign
+depending on the chosen conventions, $c$ is the class of the cocycle $(h_{ij})$. By the construction of
+$\varphi_{\X}^1$, considered as the map of $\Omega_{X'/S}^1[-1]$ into $F\al\O_X$ in $D(X')$ is none other
+than the composition of $\varphi_{\X}^1$ and the natural projection $F\al\Omega_{X/S}\bh\to F\al\O_X$,
+i.e. the obstruction to representing $\varphi_{\X}^1$ by a morphism of complexes.
+
+(iv) Suppose that $X$ admits a formal smooth lift $X^\wedge$ to $W(k)$, and let $m$ be an integer
+$<p-1$. The isomorphism $\psi_\varepsilon$ of Ogus' theorem \cite[8.20]{3} gives the truncation $\tau_{\leq m}$
+of the isomorphism $\varphi_{\X}$, where $\X$ is the reduction of $X^\wedge$ modulo $p^2$: if $\varepsilon_m$
+denotes the ``gauge'' $i\mapsto\langle m-i\rangle$ \cite{3}, 8.18.3, the subcomplex $(\Omega_{X^{\wedge'}/W}\bh)_{\varepsilon_r}$
+of $\Omega_{X^{\wedge'}/W}\bh$, for $r=m,m+1$, is written
+\[
+  p^r\O_{X^{\wedge'}}\longrightarrow p^{r-1}\Omega_{X^{\wedge'}/W}^1\longrightarrow\cdots;
+\]
+this identifies with $Ru_{X'/W\ast}\mathcal{S}_{X'/W}^{[r]}$; applying $\psi_\varepsilon$ with
+$\varepsilon=\varepsilon_m,\varepsilon_{m+1}$ and passing to the quotient, we obtain the desired
+decomposition. It is this observation, implicit in Kato \cite{14}, proved in 2.6.1, that is the origin
+of this article.
+
+If $X$ is of dimension $N<p$, the isomorphism $\psi_{\varepsilon_N}$, moreover, provides for all integers
+$n\geq 1$, an analog of the decomposition of 2.1 for the de Rham complex $\Omega_{X_n}\bh$ of $X_n/W_n(k)$,
+where $X_n$ is the reduction of $X^\wedge$ modulo $p^n$. More precisely, denote by $W_n X$ the scheme with
+the same underlying space as $X$ and with structure sheaf $W_n\O_X$ the sheaf the Witt vectors of length
+$n$ over $\O_X$. The ring homomorphism
+\[
+  W_n\O_X\longrightarrow\O_{X_n},\quad (a_0,\dots,a_{n-1})\longmapsto\wt{a}_0^{p^{n-1}}+p\wt{a}_1^{p^{n-2}}+\cdots+p^{n-1}\wt{a}_{n-1},
+\]
+where $\wt{a}_i$ lift $a_i$, allows us to consider the components of $\Omega_{X_n}\bh$ as modules over
+$W_n X$. The Frobenius endomorphism of $W_n\O_X$ defines a relative Frobenius morphism $W_n X\to W_n X'$,
+which is a linear differential. Let $X_n'$ be induced from $X_n$ by the extention of scalars
+$\sigma:W_n(k)\xrightarrow{\sim}W_n(k)$ (1.3), and denote by $(\Omega_{X_n'}\ah,pd)$ the complex induced
+from the de Rham complex of $X_n'/W_n(k)$ by multipication by $p$ of the differential. It is also a complex
+of modules, with linear differential, over $W_n X'$. The construction of the isomorphism $\psi_{\varepsilon_N}$
+gives, by reduction modulo $p^n$, an isomorphism in $D(W_n X')$:
+\[
+  \varphi_{X^\wedge}:(\Omega_{X_n'}\ah,pd)\xrightarrow{\ \sim\ }F\al\Omega_{X_n}\bh.\tag{2.2.1}
+\]
+For $n=1$, $X_1=X$, $(\Omega_{X_n'}\ah,pd)=\bigoplus_i\Omega_{X'/k}^i[-i]$ and (2.2.1) coincides with $\varphi_{X_2}$.
+We refer to the articles of Fontaine-Messing \cite{10} and Kato \cite{14} for variants and applications of (2.2.1),
+in particular the degeneration of the Hodge-de Rham spectral sequence of $X_n/W_n(k)$ for $X$ proper over $k$.
+\end{rmk}
+
+\begin{coro}
+With the notation of 2.1, let $X$ be a smooth $k$-scheme of dimension $\leq p$, liftable to $W_2(k)$. Then
+the complex $F\al\Omega_{X/S}\bh$ is isomorphic, in $D(X')$, to a complex with zero differential.
+\end{coro}
+
+The result furthermore means that $F\al\Omega_{X/S}\bh$ is isomorphic, in $D(X')$, to the sum of
+its $\HH^i[-i]$, or that there exists, in $D(X')$, an isomorphism
+\[
+  \bigoplus_i\Omega_{X'/S}^i[-i]\xrightarrow{\ \sim\ }F\al\Omega_{X/S}\bh
+\]
+inducing $C^{-1}$ on $\HH^i$ (cf. 3.1 below).
+
+We prove 2.3. We reduce to the case of $X$ connected. If $\dim X<p$, it suffices
+to apply 2.1. Suppose $\dim X=p$. On $X$, the locally free sheaves $\Omega_{X/S}^i$
+and $\Omega_{X/S}^{p-i}$ satisfy Serre duality: the product $\alpha\wedge\beta$ is a perfect duality,
+with values in $\Omega_{X/S}^p$, between $\Omega_{X/S}^i$ and $\Omega_{X/S}^{p-i}$. The morphism $F=F_{X/S}$
+is finite and flat, and as a result, by Grothendieck duality, $F\al\Omega_{X/S}^i$ and $F\al\Omega_{X/S}^{p-i}$
+are still in duality (with values in $\Omega_{X'/S}^p$), given by the pairing $(\alpha,\beta)\mapsto C(\alpha\wedge\beta)$,
+where here we denote by $C:F\al\Omega_{X/S}^p\to\Omega_{X'/S}^p$  the composition of $F\al\Omega_{X/S}^p\to\HH^p F\al\Omega_{X/S}\bh$
+and the inverse of $C^{-1}$ in degree $p$ (1.2): the point is that $C$ is none other than trace morphism. It is
+easy to verify directly that this pairing is perfect. The transpose, for this duality, of the differential $d$ of
+$F\al\Omega_{X/S}\bh$ is still $d$ (with a sign depending on the conventions). This expresses that
+\[
+  C(d\alpha\wedge\beta)\pm C(\alpha\wedge d\beta)=C(d(\alpha\wedge\beta))=0.
+\]
+
+According to 2.1, $\tau_{<p}F\al\Omega_{X/S}\bh$ is isomorphic, in $D(X')$, to the sum of its $\HH^i[-i]$. By duality,
+$\tau_{\geq 1}F\al\Omega_{X/S}\bh$ has the same property. We have a distinguished triangle
+\[
+  \tau_{<p}F\al\Omega_{X/S}\bh\longrightarrow F\al\Omega_{X/S}\bh\longrightarrow\HH^p[-p]\xrightarrow{\ e\ }.\tag{$\ast$}
+\]
+Since $\tau_{<p}F\al\Omega_{X/S}\bh$ is the sum of its $\HH^i[-i]$, the conclusion of 2.3 is equivalent to the nullity of
+\[
+  e:\HH^p[-p]\longrightarrow\left(\bigoplus_{i<p}\HH^i[-i]\right)[1].
+\]
+Let $e_i$ ($0\leq i\leq p-1$) be the components of $e$:
+\[
+  e_i\in\Hom(\HH^p[-p],\HH^i[-i+1])=\H^{p-i+1}(X',\SHom(\HH^p,\HH^i)).
+\]
+The triangle ($\ast$) maps to the triangle
+\[
+  \tau_{[1,p-1]}F\al\Omega_{X/S}\bh\longrightarrow\tau_{\geq 1}F\al\Omega_{X/S}\bh\longrightarrow\HH^p[-p]\longrightarrow,
+\]
+where $\tau_{[1,p-1]}=\tau_{\geq 1}\tau_{<p}=\tau_{<p}\tau_{\geq 1}$. As $\tau_{\geq 1}F\al\Omega_{X/S}\bh$ is the sum
+of its $\HH^i[-i]$, we have $e_i=0$ for $i\neq 0$. For $i=0$, the class $e_i$ lives in $\H^{p+1}(X',\SHom(\HH^p,\HH^0))$, and this
+group is zero because $\dim X=p$.
+
+\begin{coro}
+With the notation of 2.1, let $X$ be a proper smooth $k$-scheme of dimension $\leq p$, liftable to $W_2(k)$. Then
+the Hodge-de Rham spectral sequence
+\[
+  E_1^{ij}=\H^j(X,\Omega^i)\Longrightarrow\H_\dR\ah(X/k)\tag{2.4.1}
+\]
+degenerates at $E_1$.
+\end{coro}
+As the $\H^j(X,\Omega^i)$ are finite-dimensional $k$-vector spaces, the result means that we have, for each $n$,
+\[
+  \sum_{i+j=n}\dim\H^j(X,\Omega^i)=\dim\H_\dR^n(X/k).
+\]
+According to 2.3, we have an isomorphism in $D(X')$
+\[
+  \bigoplus_i\Omega_{X'/S}^i[-i]\xrightarrow{\ \sim\ }F\al\Omega_{X/S}\bh.
+\]
+We therefore get, for each $n$, an isomorphism
+\[
+  \bigoplus_i\H^{n-i}(X',\Omega_{X'/S}^i)\xrightarrow{\ \sim\ }\H^n(X',F\al\Omega_{X/S}\bh).
+\]
+Or, as $F$ is finite, we have $\H^n(X',F\al\Omega_{X/S}\bh)=\H^n(X,\Omega_{X/S}\bh)$. On the other hand,
+$X'$ being induced from $X$ by an extenstion of field scalars, we have
+$\dim\H^{n-i}(X',\Omega_{X'/S}^i)=\dim\H^{n-i}(X,\Omega_{X/S}^i)$, hence the conclusion.
+
+\begin{coro}
+With the notation of 2.1, let $X$ be a proper smooth $k$-scheme liftable to $W_2(k)$. Then the
+Hodge-de Rham spectral sequence satisfies $E_1^{ij}=E_\infty^{ij}$
+for $i+j<p$.
+\end{coro}
+The result means that, for $n<p$, we have
+\[
+  \sum_{i+j=n}\dim\H^j(X,\Omega^i)=\dim\H_\dR^n(X/k).
+\]
+The exact sequence of complexes
+\[
+  0\longrightarrow\tau_{<p}F\al\Omega_X\bh\longrightarrow F\al\Omega_X\bh\longrightarrow F\al\Omega_X\bh/\tau_{<p}F\al\Omega_X\bh\longrightarrow 0
+\]
+provides, for $n<p$, an isomorphism
+\[
+  \H^n(X',\tau_{<p}F\al\Omega_X\bh)\xrightarrow{\ \sim\ }\H^n(X',F\al\Omega_X\bh)=\H_\dR^n(X/k).
+\]
+Applying 2.2, we obtain, for $n<p$,
+\[
+  \bigoplus_i\H^{n-i}(X',\Omega_{X'}\bh)\xrightarrow{\ \sim\ }\H^n(X',F\al\Omega_X\bh)
+\]
+and we conclude as in 2.4.
+
+\noindent
+See 4.1.4 for the generalizations of 2.4 and 2.5.
+
+\begin{rmk}
+(i) Mumford \cite{22} has given examples of smooth projective surfaces $X/k$ having non-closed
+global $1$-forms. Other examples have later been given by Lang \cite{19}, Raynaud and Szpiro \cite{11}.
+These surfaces do not therefore do not rely on $W_2(k)$. It is the same, for $p=2$, for the Enriques surfaces
+of type $\alpha_2$, for which the differential $d_1:\H^1(\O)\to\H^1(\Omega^1)$ is nonzero (cf. for example \cite[II~7.3.8]{13}).
+See also Suwa \cite{26} for an interpretation of the degeneration condition of (2.4.1) at $E_1$, in terms of the structure of
+$\mathrm{Pic}^\tau/\mathrm{Pic}^0$ for surfaces such that
+\[
+  \chi(\O)-1+(b_1/2)=0.
+\]
+
+(ii) Under the hypotheses of 2.4, it is not true in general that the Hodge symmetry $h^{ij}=h^{ji}$ is valid
+(where $h^{ij}=\dim\H^j(X,\Omega^i)$), cf. Serre \cite{25}, \textsection 20.
+
+(iii) If $X$ is a smooth $k$-scheme of dimension $\geq p+1$, liftable to $W_2(k)$ (or even a smooth formal scheme over $W(k)$)
+it is probably not true in general that $F\al\Omega_{X/k}\bh$ is still a sum, in $D(X')$, of its $\HH^i[-i]$. However,
+we do not have a counterexample. We do not even know if, for such an $X$, supposing proper, that the Hodge-de Rham spectral
+sequence degenerates at $E_1$.
+
+(iv) If $X$ is a smooth $k$-scheme, we say that the complex $F\al\Omega_{X/k}\bh$ is \emph{decomposible} if
+it is the sum, in $D(X')$, of its $\HH^i[-i]$ (cf. 3.1). If $F\al\Omega_{X/k}\bh$ is decomposible, the same is true of
+$F\al\Omega_{Y/k}\bh$ for $Y$ {\'e}tale over $X$. If $F\al\Omega_{X/k}\bh$ and $F\al\Omega_{Y/k}\bh$ are decomposible,
+so is $F\al\Omega_{(X\times Y)/k}\bh$. If for each $n$ the natural morphism $\bigotimes^n\Omega_{X'/k}^1\to\Omega_{X'/k}^n$
+admits a section, and $X$ lifts to $W_2(k)$, an analagous argument to 2.1(a) shows that $F\al\Omega_{X/k}\bh$ is
+decomposible; this applies if $X$ is an abelian variety over $k$ (the decomposition of $F\al\Omega_{X/k}\bh$ in this case
+was reported by M. Raynaud, with another proof).
+\end{rmk}
+
+\begin{coro}
+Let $K$ be a field of characteristic $0$ and $X$ a proper smooth $K$-scheme. Then the Hodge-de Rham spectral sequence
+\[
+  E_1^{ij}=\H^j(X,\Omega^i)\Longrightarrow\H_\dR\ah(X/K)\tag{2.7.1}
+\]
+degenerates at $E_1$.
+\end{coro}
+The result still means that we have, for each $n$,
+\[
+  \sum_{i+j=n}h^{ij}=h^n,\tag{$\ast$}
+\]
+where $h^{ij}=\dim\H^j(X,\Omega^i)$ and $h^n=\dim\H_\dR^n(X/K)$. We can assume that $X$ is connected,
+with $d$ its dimension. The standard argument show that there is an integral ring $A$ of finite type over
+$\mbold{Z}$, a proper smooth morphism $f:\mathcal{X}\to\Spec(A)$, of relative dimension $d$, and a homomorphism
+$A\to K$ such that $X=\mathcal{X}\otimes_A K$. The sheaves $R^j f\al\Omega_{\mathcal{X}/A}^i$,
+$R^n f\al\Omega_{\mathcal{X}/A}\bh$ are coherent, therefore, replacing $A$ by $A[s^{-1}]$ for suitable
+$s\in A$, we can assume that they are locally free (therefore compatible under any change of base)
+and of constant ranks, $h^{ij}$ and $h^n$ respectively. Let $T$ be the schematic closure, in $\Spec(A)$,
+of a closed point of $\Spec(A\otimes\mbold{Q})$; this is a quasi-finite scheme flat over $\Spec(\mbold{Z})$.
+Choose a closed point $s$ of $T$ at which $T$ is {\'e}tale over $\mbold{Z}$, and such that the characteristic
+$p$ of the finite field $k=k(s)$ is $\geq d$. If $\O_s$ denotes the local ring of $s$ in $T$, its maximal ideal
+$\mathfrak{m}_s$ is generated by $p$, and $\O_s/\mathfrak{m}_s^2=W_2(k)$. The scheme
+$\mathcal{X}\otimes_A(\O_s/\mathfrak{m}_s^2)$ is a smooth lift of $\mathcal{X}_s=\mathcal{X}\otimes_A k(s)$.
+Given the hypothesis stated above, we have $\dim_{k(s)}\H^j(\mathcal{X}_s,\Omega^i)=h^{ij}$, and
+$\dim_{k(s)}\H_\dR^n(\mathcal{X}_s/k(s))=h^n$. But, as $d\leq p$, the relation ($\ast$) is satisfied by 2.4.
+
+\begin{coro}[Raynaud]
+With the notation of 2.1, let $X$ be a smooth projective $k$-scheme, of pure dimension $d$, liftable to
+$W_2(k)$, and let $L$ be an invertible sheaf on $X$. We make one of the following hypotheses:
+\begin{itemize}
+  \item[\emph{(i)}] $L$ is ample;
+  \item[\emph{(ii)}] $d=2$ and $L$ is numerically positive (i.e. we have $L\cdot L>0$ and $L\cdot\O(D)\geq 0$ for
+              each effective divisor $D$ of $X$).
+\end{itemize}
+Then we have:
+\[
+  \H^j(X,\Omega^i\otimes L)=0\quad\text{for }i+j>\sup(d,2d-p),\tag{2.8.1}
+\]
+\[
+  \H^j(X,\Omega^i\otimes L^{-1})=0\quad\text{for }i+j<\inf(d,p).\tag{2.8.2}
+\]
+\end{coro}
+\noindent
+Note that (2.8.1) and (2.8.2) are equivalent by Serre duality.
+
+\noindent
+The heart of the proof is the following lemma:
+\begin{lem}
+Let $X$ be a smooth $k$-scheme, $M$ an invertible sheaf on $X$ an $b$ an integer. Suppose that
+$\tau_{<b}F\al\Omega_X\bh$ is isomorphic, in $D(X')$, to a complex with zero differential,
+and that
+\[
+  \H^j(X,\Omega_X^i\otimes M^{\otimes p})=0\quad\text{for }i+j<b.\tag{$\ast$}
+\]
+Then we have
+\[
+  \H^j(X,\Omega_X^i\otimes M)=0\quad\text{for }i+j<b.
+\]
+\end{lem}
+Let $M'$ on $X'$ be induced from $M$ by a change of base. We have $F\ah M'=M^{\otimes p}$, from where,
+by the projection formula,
+\[
+  \H^j(X,M^{\otimes p}\otimes_{\O_X}\Omega_X^i)=\H^j(X',M'\otimes_{\O_{X'}}F\al\Omega_X^i)
+\]
+for each $(i,j)$. As $F\al\Omega_X\bh$ is a complex of $\O_{X'}$-modules (with $\O_{X'}$-linear 
+differential), we can consider the tensor product $M'\otimes_{\O_{X'}}F\al\Omega_X\bh$, and we have
+a spectral sequence
+\[
+  E_1^{ij}=\H^j(X',M'\otimes_{\O_{X'}}F\al\Omega_X^i)\Longrightarrow\H^{i+j}(X',M'\otimes_{\O_{X'}}F\al\Omega_X\bh).
+\]
+The hypothesis ($\ast$) implies therefore that $\H^n(X',M'\otimes_{\O_{X'}}F\al\Omega_X\bh)=0$ for $n<b$. But,
+for $n<b$, we have
+\[
+  \H^n(X',M'\otimes_{\O_{X'}}F\al\Omega_X\bh)=\H^n(X',M'\otimes_{\O_{X'}}\tau_{<b}F\al\Omega_X\bh).
+\]
+Now we have, by hypothesis, an isomorphism in $D(X')$
+\[
+  \bigoplus_{i<b}\Omega_{X'}^i[-i]\xrightarrow{\ \sim\ }\tau_{<b}F\al\Omega_X\bh.
+\]
+As a result, for $n<b$, we have
+\[
+  0=\H^n(X',M'\otimes_{\O_{X'}}F\al\Omega_X\bh)=\bigoplus_i\H^{n-i}(X',M'\otimes_{\O_{X'}}\Omega_{X'}^i).
+\]
+Since $(X',M')$ are induced from $(X,M)$ by a change of base $F_S:S\xrightarrow{\sim}S$, we have as well
+that
+\[
+  \H^{n-i}(X,M\otimes_{\O_X}\Omega_X^i)=0
+\]
+for $n<b$ and each $i$.
+
+We prove (2.8.2). According to 2.1, for $b\leq p$, $\tau_{<b}F\al\Omega_X\bh$ is isomorphic, in $D(X')$,
+to a complex with zero differential. Under the hypothesis (i), we have $\H^j(X,\Omega_X^i\otimes L^{\otimes(-N)})=0$
+for $N$ large enough and $j<d$, in particular for $N=p^n$ with $n$ large enough and $i+j<d$. Let $M$ be
+the dual of $L$. Applying 2.9 to $M^{\otimes p^n}$ and to $b=\inf(p,d)$, we obtain (2.8.2) at the end
+of a decending induction on $n$. Under the hypothesis (ii), we still have $\H^j(X,\Omega_X^i\otimes L^{\otimes(-N)})=0$
+for $N$ large enough and $i+j<2$. Indeed, it is trivial for $i=j=0$; for $j=1$, $i=0$, the assertion is due
+to Szpiro \cite[Prop.~2]{21}; finally, for $j=0$, $i=1$, it stems from the fact that, by Riemann-Roch,
+the dimension of $\H^0(X,L^{\otimes N})$ tends to infinity when $N$ tends to infinity. We then conclude as
+in the case of (i).
+
+\begin{rmk}
+(i) The idea of obtaining cancellation results by descending induction on the Frobenius morphisms is due
+to Szpiro (cf. \cite{27,28,21}). Otherwise, Esnault and Viehweg \cite{7} have recently shown
+that, over $\mbold{C}$, there exists a narrow link between the degeneration at $E_1$ of certain spectral sequences
+of type ``Hodge-de Rham'' and the Kodaira vanishing theorems.
+
+(ii) Raynaud \cite{24} and Szpiro \cite{9} have constructed examples of couples $(X,L)$, where $X/k$ is
+a smooth projective surface and $L$ is an ample invertible sheaf on $X$ such that $\H^1(X,L^{-1})\neq 0$.
+These surfaces do not lift to $W_2(k)$.
+
+(iii) Let $X$ be a smooth $k$-scheme. We will see in 3.6 that if $X$ does not lift to $W_2(k)$, then
+$\tau_{\geq 1}F\al\Omega_{X/k}\bh$---and a fortiori $F\al\Omega_{X/k}\bh$---is not isomorphic, in $D(X')$,
+to a complex with zero differential. This ``pathology'' may be invisible at the level of the Hodge spectral sequence
+or Kodaira's vanishing statements: for $p\geq 7$, Raynaud can construct, by the method of Godeaux-Serre \cite{25},
+a smooth projective surface $X$ over $\mbold{F}_p$, that does not lift to $\mbold{Z}/p^2$, and such: (a) the
+Hodge-de Rham spectral sequence of $X$ degenerates at $E_1$ (b) each ample invertible sheaf on $X$ satisfies the
+Kodaira-Akizuki-Nakano vanishing theorem.
+\end{rmk}
+
+\begin{coro}[Kodaira-Akizuki-Nakano \cite{1,18}, Ramanujam \cite{23}]
+Let $K$ be a field of characteristic $0$, $X$ a smooth projective $K$-scheme, of pure dimension $d$,
+and $L$ an invertible sheaf on $X$. Suppose that $L$ is ample, or $d=2$ and $L$ is numerically positive.
+Then we have
+\[
+  \H^j(X,\Omega^i\otimes L)=0\quad\text{for }i+j>d
+\]
+(or, equivalently, by Serre duality, $\H^j(X,\Omega^i\otimes L^{-1})=0$ for $i+j<d$).
+\end{coro}
+
+We deduce 2.11 from 2.8 as we deduced 2.6 from 2.1; we ommit the details (for the numerically positive case,
+cf. \cite[p.~42]{21}).
+
+\begin{coro}[``Weak Lefschetz'', cf. Berthelot \cite{2}]
+With the notation of 2.1, let $X$ be a smooth projective $k$-scheme of pure dimension $d$, and $D\subset X$
+a smooth divisor. Suppose that $X$ and $D$ are liftable to $W_2(k)$ and that $D$ is ample. Then the
+restriction map $\H_\dR^n(X/k)\to\H_\dR^n(D/k)$ is an isomorphism for $n<\inf(p,d)-1$ and an injection
+for $n=\inf(p,d)-1$.
+\end{coro}
+
+The kernel $\Omega_X\bh(\log D)(-D)$ of $\Omega_X\bh\to\Omega_D\bh$ [cf. 4.2.2(c)] admits a
+d{\'e}vissage (``weight filtration'')
+\[
+  0\longrightarrow\Omega_X\bh(-D)\longrightarrow\Omega_X\bh(\log D)(-D)\longrightarrow\Omega_D^{\bullet-1}(-D)\longrightarrow 0.
+\]
+The result of 2.12 means that
+\[
+  \H^n(X,\Omega_X\bh(\log D)(-D))=0\quad\text{for }n<\inf(p,d).
+\]
+We apply 2.8 to $(X,\O_X(D))$ and $(D,\O_D(D))$.
+
+\section{Gerbes of liftings and splittings, and the decomposition of the de Rham complex (general case)}
+
+\begin{blk}
+Let $A$ be an abelian category. We say that an object $K$ of $D^b(A)$ is \emph{decomposable} if $K$
+is isomorphic (in $D^b(A)$) to a complex with zero differential. For $K$ to be decomposable, it is
+necessary and sufficient that there exist, in $D(A)$, morphisms $f_i:\H^i K[-i]\to K$ such that
+$\H^i(f_i)$ are the identity maps of $\H^i K$ (this condition is necessary, because it is verified by
+$\bigoplus_i\H^i K[-i]$, and sufficient, because the $f_i$ induce an isomorphism
+$\bigoplus_i\H^i K[-i]\xrightarrow{\sim}K$). If $K$ is decomposible, we call the \emph{decomposition}
+of $K$ a morphism $f=\sum_i f_i:\bigoplus_i\H^i K[-i]\to K$ such that $\H^i f$ are the identity maps
+of $\H^i K$.
+
+Let $K$ be a decomposible complex such that $K^i=0$ for $i\neq 0,1$. A decomposition of $K$ is entirely
+determined by the data of $f_1:\H^1 K[-1]\to K$ such that $\H^1 f_1$ is the identity ($f_0$ is given by
+the injection $\H^0 K\hookrightarrow K^0$). The distinguished triangle
+\[
+  \H^0 K\longrightarrow K\longrightarrow\H^1 K[-1]\longrightarrow
+\]
+provides the exact sequence
+\[
+  0\longrightarrow\Hom(\H^1 K[-1],\H^0 K)\longrightarrow\Hom(\H^1 K[-1],K)\xrightarrow{\ a\ }\Hom(\H^1 K,\H^1 K),
+\]
+which shows that the set of decompositions of $K$ is an affine space in $\Hom(\H^1 K[-1],\H^0 K)=\Ext^1(\H^1 K,\H^0 K)$
+(the inverse image by $a$ of $\Id$).
+\end{blk}
+
+\begin{blk}
+Let $(T,\O)$ be a ringed site and $K$ a complex of $\O$-modules over $T$ with $K^i=0$ for $i\neq 0,1$. Suppose
+that $\HH^1 K$ is locally free of finite rank; the projection of $K^1$ onto $\HH^1 K$ therefore admits a local
+section. Furthermore, suppose that the projection of $K^0$ onto $\operatorname{im}(d)$ admits a local section.
+
+Let $\Sc'(K)$\footnote{[Trans]. $\Sc$ is an abbreviation for the French \emph{scindages}, for ``splittings''.}
+be the following fibered category over $T$: an object over $U$ is a splitting (over $U$)
+$s:\HH^1 K\to K^1$ of the projection of $K^1$ onto $\HH^1 K$; a map from $s'$ to $s''$ is a homomorphism
+$h:\HH^1 K\to K^0$ (over $U$) such that $s''=s'+dh$. If $s'$ and $s''$ are two objects over $U$, the morphisms
+of $s'$ to $s''$ form a sheaf on $U$: $\Sc'(K)$ is a prestack (in groupoids). Furthermore, the hypotheses made
+on $K$ imply that: (a) each $U$ admits a covering $R$ such that the fibered category $\Sc'(K)(R)$ is nonempty
+(b) any two objects of $\Sc'(K)$ are locally isomorphic. The stack associated to the prestack $\Sc'(K)$ is
+a gerbe (Giraud \cite[III~\textsection~2]{12}), the \emph{gerbe of splittings} of $K$, denoted $\Sc(K)$.
+
+For each object $s$ of $\Sc(K)$, $\SHom(s,s)$ is the abelian sheaf $\SHom(\HH^1 K,\HH^0 K)$. The gerbe
+$\Sc(K)$ admits a global object\footnote{See 3.3(b) for a description of global objects.} if its class
+\cite[IV~3.1,~3.5]{12}
+\[
+  \Cl\Sc(K)\in\H^2(T,\SHom(\HH^1 K,\HH^0 K))=\Ext^2(\HH^1 K,\HH^0 K)
+\]
+is zero. If this is the case, the set of isomorphism classes of global objects of $\Sc(K)$ is an affine space
+in $\H^1(T,\SHom(\HH^1 K,\HH^0 K))$ $=\Ext^1(\HH^1 K,\HH^0 K)$ (if $s$ and $t$ are two global objects, their
+``difference'' $t-s$ is the torsor class of local isomorphisms of $s$ to $t$, cf. \cite[III~2.2.6]{12}).
+
+We also denote
+\[
+  \e(K)\in\Ext^2(\HH^1 K,\HH^0 K)
+\]
+the class defined by the degree $1$ morphism of the distinguished triangle
+\[
+  \HH^0 K\longrightarrow K\longrightarrow\HH^1 K[-1]\xrightarrow{\ +1\ }.
+\]
+We have $\e(K)=0$ if and only if $K$ is decomposible (3.1). On the other hand, we have seen that, if $K$
+is decomposible, the set of decompositions of $K$ is an affine space in $\Ext^1(\HH^1 K,\HH^0 K)$.
+\end{blk}
+
+\begin{prop}
+With the preceding notation: \emph{(a)} we have
+\[
+  \Cl\Sc(K)=-\e(K).
+\]
+
+\emph{(b)} There exists a canonical affine bijection $\alpha$, defined below, from the set of isomorphism
+classes of global objects of $\Sc(K)$ to the set of decompositions of $K$, inducing the indentity of
+the group of translations $\Ext^1(\HH^1 K,\HH^0 K)$.
+\end{prop}
+
+We prove (a). Choose a hypercover $U\bl\to T$, over $U_0$ a section $f:\HH^1 K\to K^1$ of the projection
+of $K^1$ onto $\HH^1 K$, and over $U_1$, $g:\HH^1 K\to K^0$ such that $d_1\ah f-d_0\ah f=g$. Then
+$h=d_0\ah g-d_1\ah g+d_2\ah g$ is a $2$-cocycle of $U\bl$ with values in $\SHom(\HH^1 K,\HH^0 K)$, whose
+image in $\H^2(T,\SHom(\HH^1 K,\HH^0 K))$ is $\Cl\Sc(K)$ (cf. \cite[IV~3.5]{12}). On the other hand,
+with the sign convention of
+[J.-L. Verdier, Cat{\'e}gories d{\'e}riv{\'e}es, Etat 0, p. 269, in SGA 4 1/2, Springer Lecture Notes 569],
+$\e(K)$ is the class of the ``composite'' morphism
+\[
+  \HH^1 K[-1]\xleftarrow{\ q\ }E\xrightarrow{-\pr}\HH^0 K[1],
+\]
+where
+\[
+  E=\left(\HH^0 K\longrightarrow K^0\xrightarrow{\ d\ }K^1\right)
+\]
+is the cone (concentrated in degrees $-1,0,1$) of $\HH^0 K\to K$, $q$ the quasi-isomorphism given by
+the projection of $K^1$ onto $\HH^1 K$, and $\pr$ the evident projection. We put $M=\HH^0 K$,
+$N=\HH^1 K$, and denote by $\check{N}$ the dual of $N$. The class $\e(K)$ is still the image of
+$\Id_N\in\H^0(T,\check{N}\otimes N)$ in $\H^2(T,\check{N}\otimes M)=\H^2(T,\SHom(\HH^1 K,\HH^0 K))$
+under the composite morphism
+\[
+  \H^0(T,\check{N}\otimes N)\xleftarrow[\ \simeq\ ]{\ q\ }\H^1(T,\check{N}\otimes K)\xrightarrow{-\Id_N\otimes\pr}\H^2(T,\check{N}\otimes M).
+\]
+Or
+\[
+  c=(h,-g,f)\in\check{C}^1(U\bl,\check{N}\otimes M)
+  =\check{C}^2(U\bl,\check{N}\otimes M)\oplus\check{C}^1(U\bl,\check{N}\otimes K^0)\oplus\check{C}^0(U\bl,\check{N}\otimes K^1)
+\]
+is a $1$-cocycle, of the image of $\Id_N$ under $q$, and $-h$ under $\Id_N\otimes\pr$. Thus
+$\e(K)=-\Cl\Sc(K)$.
+
+We now construct $\alpha$. Let $s$ be a global object of $\Sc(K)$, described by a hyper $U\bl\to T$,
+over $U_0$ a section $f:\HH^1 K\to K^1$ of the projection of $K^1$ onto $\HH^1 K$, and over $U_1$,
+$h:\HH^1 K\to K^0$ such that $d_0\ah f-d_1\ah f=dh$ and $d_0\ah h-d_1\ah h+d_2\ah h=0$. Then
+\[
+  (h,f):\HH^1 K\longrightarrow\C^1(U\bl,K)=\C^1(U\bl,K^0)\oplus\C^0(U\bl,K^1)
+\]
+is a morphism from $\HH^1 K[-1]$ to $\C(U\bl,K)$, whose image $\alpha(s)$ in $\Hom_{D(T)}(\HH^1 K[-1],K)$
+is a decomposition of $K$. By arguments similar to those of the proof of 2.1(d), it is verified that $\alpha(s)$
+is independent of the choices of $(U\bl,f,h)$, and depends only on the isomorphism class of $s$. It remains to
+prove that, if $t$ is a second global object of $\Sc(K)$, we have $\alpha(t)-\alpha(s)=t-s$ in
+$\Ext^1(\HH^1 K,\HH^0 K)$. We can assume that $t$ is described by $(U\bl,g,k)$ and that we have,
+over $U_0$, $u:\HH^1 K\to K^0$ such that $g-f=du$. The square
+\[
+  \begin{tikzcd}
+  d_1\ah f\ar[r,"h"]\ar[d,"d_1\ah u"'] & d_0\ah f\ar[d,"d_0\ah u"]\\
+  d_1\ah g\ar[r,"k"] & d_0\ah g
+  \end{tikzcd}
+\]
+gives
+\[
+  v=d_1\ah u+k-h-d_0\ah u:\HH^1 K\longrightarrow\HH^0 K\quad\text{over }U_1,
+\]
+a $1$-cocycle of $U\bl$ with values in $\SHom(\HH^1 K,\HH^0 K)$, whose image in $\H^1(T,\SHom(\HH^1 K,\HH^0 K))$
+is (with the adequate conventions) the class of $t-s$. With the above notation, we then have
+\[
+  (k,g)-(h,f)=v+du:\HH^1 K\longrightarrow\C^1(U\bl,K),
+\]
+where $u$ is considered as a map from $\HH^1 K$ to $\C^0(U\bl,K)$ and $d$ denotes the total differential
+of the complex $\C(U\bl,K)$. So we have $\alpha(t)-\alpha(s)=t-s$, which completes the proof of (b).
+
+\begin{blk}
+Let $S$ be a scheme of characteristic $p>0$, $X$ a smooth scheme over $S$, and $F:X\to X'$ the relative
+Frobenius (1.1). Suppose we are given a scheme $\wt{S}$ flat over $\mbold{Z}/p^2$ whose reduction modulo $p$
+is $S$. We propose to describe the gerbe of splittings of $K=\tau_{\leq 1}F\al\Omega_{X/S}\bh$ in terms
+of lifts of $X'$ to $\wt{S}$.
+
+For each smooth scheme $Y$ over $S$, the \emph{gerbe of lifts} of $Y$ to $\wt{S}$, denoted
+$\Rel(Y,\wt{S})$\footnote{[Trans]. $\Rel$ is an abbreviation for the French \emph{rel{\`e}vements}, for ``lifts''.},
+is the gerbe over $Y$ having for objects over an open $U$ the schemes $\wt{U}$ flat over $\wt{S}$ whose reduction
+modulo $p$ is $U$ (i.e. equipped with an isomorphism of their reduction modulo $p$ to $U$). A morphism
+$\wt{U}'\to\wt{U}''$ is a morphism of $\wt{S}$-schemes, with reduction modulo $p$ the identity. The sheaf of
+automorphisms of any lift of $U$ is an abelian sheaf $\Theta_{U/S}=\SHom(\Omega_{U/S}^1,\O_U)$ of stacks of
+relative vectors on $U$.
+\end{blk}
+
+\begin{thm}
+There exists a canonical equivalence of gerbes, defined below,
+\[
+  \Phi:\Rel(X',\wt{S})\longrightarrow\Sc(\tau_{\leq 1}F\al\Omega_{X/S}\bh),
+\]
+inducing the identity on the sheaves of automorphisms of objects.
+\end{thm}
+
+(Note that, for the two gerbes considered, the sheaf of automorphims of an object is the sheaf
+$\Theta_{X'/S}$ of stacks of relative vectors.)
+
+\noindent
+Taking into account 3.3, we deduce:
+\begin{coro}
+\emph{(a)} For $X'$ to admit a lift to $\wt{S}$, it is necessary and sufficient that $\tau_{\leq 1}F\al\Omega_{X/S}\bh$
+is decomposable.
+
+\emph{(b)} If this is the case, $\alpha\circ\Phi$ is an affine bijection from the set of isomorphism classes
+of lifts of $X'$ to $\wt{S}$ to the set of decompositions of $\tau_{\leq 1}F\al\Omega_{X/S}\bh$, inducing
+the identity on the group of translations $\Ext^1(\HH^1 F\al\Omega_{X/S}\bh,\HH^0 F\al\Omega_{X/S}\bh)$
+(isomorphic, by Cartier, to $\Ext^1(\Omega_{X'/S}^1,\O_{X'})=\H^1(X',\Theta)$).
+\end{coro}
+
+The arguments of 2.1(a) and the proof of 2.3 give as well:
+
+\begin{coro}
+\emph{(a)} For each lift of $X'$ to $\wt{S}$
+\end{coro}
+
+
+
+
+\noindent
+\textit{Thanks}. We are grateful to J.-M. Fontaine and W. Messing for sharing with us
+their results of degenerence, which, together with that of K. Kato, served as a catalyst for this paper.
+It is a pleasure to thank G. Laumon for the work he has done since the beginning; his
+critical reading of a first version of this article and the suggestions he made to us were
+priceless. Finally, we would like to thank M. Raynaud for many discussions.
+
+\begin{thebibliography}{28}
+\bibitem{1}
+Akizuki, Y., Nakano, S.: Note on Kodaira-Spencer's proof of Lefschetz's theorem. Proc. Jap. Acad.,
+Ser. A 30, 266--272 (1954)
+
+\bibitem{2}
+Berthelot, P.: Sur le ``th{\'e}or{\`e}me de Lefschetz faible'' en cohomologie cristalline. C. R. Acad. Sci.,
+Paris, Ser. A 277, 955--958 (1973)
+
+\bibitem{3}
+Berthelot, P., Ogus, A.: Notes on crystalline cohomology. Mathematical Notes n\textsuperscript{o} 21, Princeton
+University Press 1978
+
+\bibitem{4}
+Cartier, P.: Une nouvelle op{\'e}ration sur les formes diff{\'e}rentielles. C. R. Acad. Sci., Paris, 244,
+426--428 (1957)
+
+\bibitem{5}
+Deligne, P.: Th{\'e}or{\`e}me de Lefschetz et crit{\`e}res de d{\'e}g{\'e}n{\'e}rescence de suites spectrales.
+Publ. Math., Inst. Hautes Etud. Sci. 35, 107--126 (1968)
+
+\bibitem{6}
+Deligne, P.: Th{\'e}orie de Hodge II. Publ. Math., Inst. Hautes Etud. Sci. 40, 5--57 (1972)
+
+\bibitem{7}
+Esnault, H., Viehweg, E.: Logarithmic De Rham complexes and vanishing theorems. Invent. Math. 86, 161--194 (1986)
+
+\bibitem{8}
+Faltings, G.: $p$-adic Hodge Theory. Preprint, Princeton University (1985)
+
+\bibitem{9}
+Flexor, M.: Nouveaux contre-exemples aux {\'e}nonc{\'e}s d'annulation {\`a} la Kodaira en caract{\'e}ristique
+$p>0$, dans S{\'e}minaire sur les pinceaux de courbes de genre au moins deux par L. Szpiro. Ast{\'e}risque
+86, 79--89 (1981)
+
+\bibitem{10}
+Fontaine, J.-M., Messing, W.: Cohomologie cristalline et d{\'e}g{\'e}n{\'e}rescence de la suite spectrale de
+Hodge vers de Rham. Preprint, Universit{\'e} de Grenoble (1985)
+
+\bibitem{11}
+Fossum, R.: Formes diff{\'e}rentielles non ferm{\'e}es, dans S{\'e}minaire sur les pinceaux de courbes de genre
+au moins deux par L. Szpiro. Ast{\'e}risque 86, 90--96 (1981)
+
+\bibitem{12}
+Giraud, J.: Cohomologie non ab{\'e}lienne. Grundlehren der mathematischen Wissenschaften, Vol. 179. Berlin-Heidelberg-New York:
+Springer 1971
+
+\bibitem{13}
+Illusie, L.: Complexe de de Rham-Witt et cohomologie cristalline. Ann. Sci. Ec. Norm. Super., IV. Ser. 12, 501--561 (1979)
+
+\bibitem{14}
+Kato, K.: On $p$-adic vanishing cycles (Application of ideas of Fontaine-Messing). Preprint, Tokyo University (1985)
+
+\bibitem{15}
+Katz, N.: Nilpotent Connections and the Monodromy Theorem. Publ. Math., Inst. Hautes Etud. Sci. 39, 175--232 (1970)
+
+\bibitem{16}
+Katz, N.: Algebraic solutions of differential equations ($p$-Curvature and the Hodge filtration). Invent. Math. 18, 1--118 (1972)
+
+\bibitem{17}
+Knutson, D.: Algebraic spaces. Lect. Notes Math. 203. Berlin-Heidelberg-New York: Springer 1971
+
+\bibitem{18}
+Kodaira, K.: On a differential-geometric method in the theory of analytic stacks. Proc. Natl. Acad. Sci. USA 39, 1268--1273 (1953)
+
+\bibitem{19}
+Lang, W.: Quasi-elliptic surfaces in characteristic three. Ann. Sci. Ec. Norm. Super., IV. Ser. 12, 473--500 (1979)
+
+\bibitem{20}
+Mazur, B.: Frobenius and the Hodge Filtration (Estimates). Ann. Math. 98, 58--95 (1973)
+
+\bibitem{21}
+M{\'e}n{\'e}gaux, R.: Un th{\'e}or{\`e}me d'annulation en caract{\'e}ristique positive, dans S{\'e}minaire sur les pinceaux de courbes de
+genre au moins deux par L. Szpiro. Ast{\'e}risque 86, 35--43 (1981) 270 P. Deligne et L. Illusie
+
+\bibitem{22}
+Mumford, D.: Pathologies of modular surfaces. Am. J. Math. 83, 339--342 (1961)
+
+\bibitem{23}
+Ramanujam, C.P.: Remarks on the Kodaira Vanishing Theorem. J. Indian Math. Soc. 36, 41--51
+(1972); 38, 121--124 (1974)
+
+\bibitem{24}
+Raynaud, M.: Contre-exemple au ``Vanishing Theorem'' en caract{\'e}ristique $p>0$, dans C. P.
+Ramanujam --- A tribute, Studies in Mathematics 8, Tata Institute of Fundamental Research
+Bombay, 273--278 (1978)
+
+\bibitem{25}
+Serre, J.-P.: Sur la topologie des vari{\'e}t{\'e}s alg{\'e}briques en caract{\'e}ristique $p$, dans Symposium
+Internacional de Topologia Algebraica, M{\'e}xico, 24--53 (1958)
+
+\bibitem{26}
+Suwa, N.: De Rham cohomology of algebraic surfaces with $q=-p_a$ in char. $p$, dans Algebraic
+Geometry, Proceedings, Tokyo-Kyoto 1982, Raynaud, M., Shioda, T. (eds.). Notes in Math.,
+Vol. 1016, 73--85 (1983)
+
+\bibitem{27}
+Szpiro, L.: Le th{\'e}or{\`e}me de la r{\'e}gularit{\'e} de l'adjointe de Gorenstein {\`a} Kodaira, dans Int. Symposium
+on Algebraic Geometry Kyoto, 93--102 (1977)
+
+\bibitem{28}
+Szpiro, L.: Sur le th{\'e}or{\`e}me de rigidit{\'e} de Parsin et Arakelov, dans Journ{\'e}es de g{\'e}ometrie alg{\'e}brique
+de Rennes II. Ast{\'e}risque 64, 169--202 (1979) 
+\end{thebibliography}
+
+\noindent
+\textit{Acronyms}
+
+\noindent
+EGA IV.---El{\'e}ments de G{\'e}om{\'e}trie Alg{\'e}brique,
+by A. Grothendieck, written with the collaboration of J.
+Dieudonn{\'e}. Publ. Math., Inst. Hautes Etud.
+Sci. 20 (1964); 24 (1965); 28 (1966); 32 (1967)\\
+
+\noindent
+SGA 1.---Rev{\^e}tements {\'e}tales et groupe fondamental,
+S{\'e}minaire de G{\'e}om{\'e}trie Alg{\'e}brique du
+Bois-Marie 1960/61, by A. Grothendieck. Lect. Notes Math.,
+Vol. 224. Berlin-Heidelberg-New York: Springer 1971\\
+
+\noindent
+SGA 6.---Th{\'e}orie des Intersections et Th{\'e}or{\`e}me de Riemann-Roch,
+S{\'e}minaire de G{\'e}om{\'e}rie Alg{\'e}brique
+du Bois-Marie 1966/67, by P. Berthelot, A. Grothendieck, L. Illusie.
+Lect. Notes in Math., Vol. 225.
+Berlin-Heidelberg-New York: Springer (1971) 
+
+\end{document}
+
